@@ -35,8 +35,8 @@ async fn main() -> Result<()> {
             .show(&mut i2c, true)
             .expect("failed to write to display");
 
-        let (volume, power) = match resp {
-            Ok(r) => (yamaha::volume_to_db(r.volume).abs(), r.power),
+        let response_data = match resp {
+            Ok(r) => r,
             Err(e) => {
                 error!(%e, "failed to make request for receiver status");
                 display.write_string("ERROR");
@@ -48,20 +48,22 @@ async fn main() -> Result<()> {
             }
         };
 
-        let standby = power == "standby";
+        let volume = yamaha::volume_to_db(response_data.volume).abs();
+        let standby = response_data.power == "standby";
 
+        let mut brightness = 0.1;
         if standby {
             display.write_string("SYSOFF");
-            display
-                .set_brightness(&mut i2c, 0.1)
-                .expect("failed to set brightness");
+        } else if response_data.sleep != 0 {
+            display.write_string("SLEEP");
         } else {
-            display
-                .set_brightness(&mut i2c, 1.0)
-                .expect("failed to set brightness");
+            brightness = 1.0;
             display.write_string(&format!("{:.1}db", volume));
         }
 
+        display
+            .set_brightness(&mut i2c, brightness)
+            .expect("failed to set brightness");
         display
             .show(&mut i2c, true)
             .expect("failed to write to display");
