@@ -1,11 +1,20 @@
 use anyhow::Result;
+use reqwest::Client;
 
 use crate::config::Config;
 
 mod config;
+mod yamaha;
 
-fn main() -> Result<()> {
+#[tokio::main]
+async fn main() -> Result<()> {
     let conf = Config::read()?;
-    dbg!(conf.ip);
+    let client = Client::new();
+
+    let resp = yamaha::status(&client, &conf).await?;
+    dbg!(resp.volume);
+
+    dbg!(yamaha::volume_to_db(resp.volume,));
+
     Ok(())
 }
