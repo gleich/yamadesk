@@ -21,7 +21,7 @@ pub struct StatusResponse {
 }
 
 pub async fn status(client: &Client, conf: &Config) -> Result<StatusResponse> {
-    Ok(client
+    client
         .get(format!(
             "http://{}/YamahaExtendedControl/v1/main/getStatus",
             conf.ip
@@ -31,7 +31,7 @@ pub async fn status(client: &Client, conf: &Config) -> Result<StatusResponse> {
         .context("sending request")?
         .json()
         .await
-        .context("decoding json")?)
+        .context("decoding json")
 }
 
 pub fn volume_to_db(volume: i32) -> f32 {
