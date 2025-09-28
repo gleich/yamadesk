@@ -5,9 +5,11 @@ edition = "2024"
 
 [dependencies]
 anyhow = "1.0.100"
-microdotphat = "0.1.2"
+microdotphat = "0.2.3"
 reqwest = { version = "0.12.23", features = ["json"] }
 rppal = { version = "0.22.1", features = ["hal"] }
 serde = { version = "1.0.228", features = ["derive"] }
 tokio = { version = "1.47.1", features = ["macros", "rt-multi-thread"] }
 toml = "0.9.7"
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.20", features = ["env-filter"] }
