@@ -25,15 +25,9 @@ async fn main() -> Result<()> {
     info!("connected to microdotphat display");
 
     loop {
-        set_decimals(&mut display, true);
-        display
-            .show(&mut i2c, true)
-            .expect("failed to write to display");
+        set_decimals(&mut display, &mut i2c, true);
         let resp = yamaha::status(&client, &conf).await;
-        set_decimals(&mut display, false);
-        display
-            .show(&mut i2c, true)
-            .expect("failed to write to display");
+        set_decimals(&mut display, &mut i2c, false);
 
         let response_data = match resp {
             Ok(r) => r,
@@ -78,8 +72,9 @@ async fn main() -> Result<()> {
     }
 }
 
-fn set_decimals(display: &mut MicrodotPHAT, on: bool) {
+fn set_decimals(display: &mut MicrodotPHAT, i2c: &mut I2c, on: bool) {
     for i in 0..6 {
         display.set_decimal(i, on);
     }
+    display.show(i2c, true).expect("failed to write to display");
 }
