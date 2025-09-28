@@ -1,0 +1,20 @@
+[Unit]
+Description=YamaDesk Volume Display
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=matt
+Group=matt
+ExecStart=/home/matt/.cargo/bin/yamadesk
+WorkingDirectory=/home/matt/yamadesk
+Restart=always
+RestartSec=2
+
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=full
+ProtectHome=yes
+
+[Install]
+WantedBy=multi-user.target
