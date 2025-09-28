@@ -18,7 +18,17 @@ async fn main() -> Result<()> {
     let mut display = MicrodotPHAT::new(&mut i2c).expect("failed to create microdotphat");
 
     loop {
+        let decimal_index = 3;
+        display.set_decimal(decimal_index, true);
+        display
+            .show(&mut i2c, true)
+            .expect("failed to write to display");
         let resp = yamaha::status(&client, &conf).await?;
+        display.set_decimal(decimal_index, false);
+        display
+            .show(&mut i2c, true)
+            .expect("failed to write to display");
+
         let db = yamaha::volume_to_db(resp.volume).abs();
         display.write_string(&format!("{:.1}db", db), 0, 0);
         display

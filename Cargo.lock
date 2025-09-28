@@ -609,9 +609,9 @@ checksum = "f52b00d39961fc5b2736ea853c9cc86238e165017a493d1d5c8eac6bdc4cc273"
 
 [[package]]
 name = "microdotphat"
-version = "0.1.1"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec781728201f022e5b7b0b355621e00dcf159a678bf9b923d7ccab87fee8dd0b"
+checksum = "ee105046ae7131564b0da652c2ec06cdb1a6b56df286469fb1804ed5d3836d59"
 dependencies = [
  "embedded-hal 1.0.0",
 ]
