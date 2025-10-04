@@ -33,14 +33,13 @@ async fn main() -> Result<()> {
             Ok(r) => r,
             Err(e) => {
                 error!(%e, "failed to make request for receiver status");
-                for _ in 0..10 {
-                    let delay = Duration::from_millis(50);
+                for _ in 0..50 {
+                    let delay = Duration::from_millis(40);
                     set_decimals(&mut display, &mut i2c, true);
                     sleep(delay);
                     set_decimals(&mut display, &mut i2c, false);
                     sleep(delay);
                 }
-                sleep(Duration::from_secs(5));
                 continue;
             }
         };
