@@ -35,5 +35,5 @@ pub async fn status(client: &Client, conf: &Config) -> Result<StatusResponse> {
 }
 
 pub fn volume_to_db(volume: i32) -> f32 {
-    -96.5 + 0.5 * (volume as f32) - 0.5
+    (-96.5 + 0.5 * (volume as f32) - 0.5).abs()
 }

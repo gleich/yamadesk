@@ -44,7 +44,7 @@ async fn main() -> Result<()> {
             }
         };
 
-        let volume = yamaha::volume_to_db(response_data.volume).abs();
+        let volume = yamaha::volume_to_db(response_data.volume);
         let standby = response_data.power == "standby";
 
         let mut brightness = 0.1;
