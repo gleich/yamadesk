@@ -33,11 +33,12 @@ async fn main() -> Result<()> {
             Ok(r) => r,
             Err(e) => {
                 error!(%e, "failed to make request for receiver status");
-                display.write_string("ERROR");
-                display
-                    .show(&mut i2c, true)
-                    .expect("failed to write to display");
-                sleep(Duration::from_secs(10));
+                for _ in 0..10 {
+                    set_decimals(&mut display, &mut i2c, true);
+                    sleep(Duration::from_millis(20));
+                    set_decimals(&mut display, &mut i2c, false);
+                }
+                sleep(Duration::from_secs(5));
                 continue;
             }
         };
