@@ -32,7 +32,7 @@ async fn main() -> Result<()> {
         let response_data = match resp {
             Ok(r) => r,
             Err(e) => {
-                error!(%e, "failed to make request for receiver status");
+                error!("failed to make request for receiver status: {e:?}");
                 for _ in 0..20 {
                     let delay = Duration::from_millis(40);
                     set_decimals(&mut display, &mut i2c, true);
