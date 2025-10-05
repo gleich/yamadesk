@@ -51,6 +51,7 @@ async fn main() -> Result<()> {
         if standby {
             display.write_string("SYSOFF");
         } else if response_data.sleep != 0 {
+            brightness = 0.02;
             display.write_string("SLEEP");
         } else {
             brightness = 1.0;
