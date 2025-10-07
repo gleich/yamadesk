@@ -47,11 +47,11 @@ async fn main() -> Result<()> {
         let volume = yamaha::volume_to_db(response_data.volume);
         let standby = response_data.power == "standby";
 
-        let mut brightness = 0.1;
+        let mut brightness = 0.05;
         if standby {
             display.write_string("SYSOFF");
         } else if response_data.sleep != 0 {
-            brightness = 0.02;
+            brightness = 0.1;
             display.write_string("SLEEP");
         } else {
             brightness = 1.0;
